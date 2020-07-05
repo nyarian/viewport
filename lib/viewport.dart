@@ -3,7 +3,7 @@
 ///
 /// The most common use case is when an existing Flutter project for that works
 /// well for mobile devices should be mirrored as is as a web and / or desktop
-/// application. Imagine this:
+/// application. Consider:
 /// ```dart
 /// //...
 /// child: EmailInputField(width: MediaQuery.of(context).size.width * 0.9),
@@ -15,7 +15,7 @@
 /// The problem is that it won't change the MediaQuery.of(context).size values,
 /// so, most probably, there will be a lot of "rendering area overflow" errors
 /// all over the running application. And that's where viewport library comes
-/// into the game - it supports a variety of top-level configurations for the
+/// into play - it supports a variety of top-level configurations for the
 /// rendering area policy, so that it is trivial to say something like "set the
 /// upper bound for the MediaQuery.of(context).size to such a values: ...":
 ///
