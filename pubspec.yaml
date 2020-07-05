@@ -1,0 +1,16 @@
+name: viewport
+description: A MediaQuery alternative for Flutter which provides and allows different configurations.
+version: 0.0.1
+author: orkay255@gmail.com
+homepage: https://github.com/nyarian/viewport
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
