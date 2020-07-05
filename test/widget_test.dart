@@ -220,6 +220,30 @@ void main() {
   });
 
   group('coercedMediaQuery', () {
+    test(
+        'assert that assertion error is thrown if maxHeight is less than '
+        'minHeight', () {
+      expect(
+          () => ViewPortWidget.coercedMediaQuery(
+                minHeight: 400,
+                maxHeight: 200,
+                child: const SizedWidget(),
+              ),
+          throwsAssertionError);
+    });
+
+    test(
+        'assert that assertion error is thrown if maxWidth is less than '
+        'minWidth', () {
+      expect(
+          () => ViewPortWidget.coercedMediaQuery(
+                minWidth: 400,
+                maxWidth: 200,
+                child: const SizedWidget(),
+              ),
+          throwsAssertionError);
+    });
+
     group('less than boundary', () {
       const minHeight = 1000.0;
       const minWidth = 1000.0;

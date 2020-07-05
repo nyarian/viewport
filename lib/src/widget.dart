@@ -120,13 +120,11 @@ class FixedViewPortFactory implements WidgetViewPortFactory {
   int get hashCode => width.hashCode ^ height.hashCode;
 
   @override
-  String toString() =>
-      'FixedViewPortFactory{_width: $width, _height: $height}';
+  String toString() => 'FixedViewPortFactory{_width: $width, _height: $height}';
 }
 
 @immutable
 class MediaQueryViewPortFactory implements WidgetViewPortFactory {
-
   const MediaQueryViewPortFactory();
 
   @override
@@ -289,8 +287,11 @@ class CoercedViewPortFactory implements WidgetViewPortFactory {
     this.maxWidth = double.infinity,
     this.minHeight = 0,
     this.minWidth = 0,
-  }) : assert(delegateFactory != null,
-            'Given decorated viewport factory points to null');
+  })  : assert(delegateFactory != null,
+            'Given decorated viewport factory points to null'),
+        assert(minHeight <= maxHeight,
+            'maxHeight < minHeight, which is forbidden'),
+        assert(minWidth <= maxWidth, 'maxWidth < minWidth, which is forbidden');
 
   @override
   ViewPort create(BuildContext context) => const ViewPorts().coerced(

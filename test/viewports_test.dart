@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:viewport/src/viewport.dart';
 
@@ -233,6 +233,22 @@ void main() {
       expect(subject.height, decorated.height);
       expect(subject.width, decorated.width);
       expect(subject.aspectRatio, decorated.aspectRatio);
+    });
+
+    test('assert that assertion error is thrown if maxHeight < minHeight', () {
+      const decorated = FixedViewPort(height: 555, width: 555);
+      expect(
+          () => const ViewPorts()
+              .coerced(decorated, minHeight: 200, maxHeight: 100),
+          throwsAssertionError);
+    });
+
+    test('assert that assertion error is thrown if maxWidth < minWidth', () {
+      const decorated = FixedViewPort(height: 555, width: 555);
+      expect(
+          () => const ViewPorts()
+              .coerced(decorated, minWidth: 200, maxWidth: 100),
+          throwsAssertionError);
     });
 
     group('actual width is lesser than bound', () {

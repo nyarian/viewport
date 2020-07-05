@@ -71,13 +71,16 @@ class ViewPorts {
     double minWidth = 0,
     double maxHeight = double.infinity,
     double maxWidth = double.infinity,
-  }) =>
-      minOf(
-          FixedViewPort(height: maxHeight, width: maxWidth),
-          maxOf(
-            FixedViewPort(height: minHeight, width: minWidth),
-            decorated,
-          ));
+  }) {
+    assert(minHeight <= maxHeight, 'minHeight > maxHeight, which is forbidden');
+    assert(minWidth <= maxWidth, 'minWidth > maxWidth, which is forbidden');
+    return minOf(
+        FixedViewPort(height: maxHeight, width: maxWidth),
+        maxOf(
+          FixedViewPort(height: minHeight, width: minWidth),
+          decorated,
+        ));
+  }
 
   ViewPort upperBoundedMediaQuery(
     MediaQueryData data, {
