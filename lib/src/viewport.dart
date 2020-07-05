@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
+import 'package:viewport/src/widget.dart';
 
 abstract class ViewPort {
   double get width;
@@ -8,6 +9,27 @@ abstract class ViewPort {
   double get height;
 
   double get aspectRatio;
+
+  static ViewPort of(BuildContext context) {
+    assert(context != null, 'Provided BuildContext reference points to null');
+    final ViewPortWidget widget =
+        context.dependOnInheritedWidgetOfExactType<ViewPortWidget>();
+    if (widget != null) {
+      return widget.factory.create(context);
+    } else {
+      throw FlutterError.fromParts(<DiagnosticsNode>[
+        ErrorSummary(
+            'ViewPortWidget.of() called with a context that does not contain a '
+            'ViewPortWidget.'),
+        ErrorDescription('''
+No ViewPortWidget ancestor could be found starting from the context that was 
+passed to ViewPortWidget.of(). This most probably happens because the parents 
+chain of the widget that requested invoked ViewPortWidget.of() does not have a 
+ViewPortWidget instance as a part of it's tree.'''),
+        context.describeElement('The context used was')
+      ]);
+    }
+  }
 }
 
 @immutable
