@@ -3,28 +3,6 @@ import 'package:viewport/viewport.dart';
 
 void main() {
   test(
-    'assert that null as a first viewport is forbidden',
-    () {
-      expect(
-        () => MinimalOfViewPort(null, const FixedViewPort()),
-        throwsAssertionError,
-      );
-    },
-    timeout: const Timeout(Duration(seconds: 1)),
-  );
-
-  test(
-    'assert that null as a second viewport is forbidden',
-    () {
-      expect(
-        () => MinimalOfViewPort(const FixedViewPort(), null),
-        throwsAssertionError,
-      );
-    },
-    timeout: const Timeout(Duration(seconds: 1)),
-  );
-
-  test(
     'assert that minimal of two height values was returned',
     () {
       const subject = MinimalOfViewPort(FixedViewPort(height: 50, width: 50),

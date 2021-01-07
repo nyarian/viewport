@@ -373,7 +373,7 @@ void main() {
 }
 
 class SizedWidget extends StatelessWidget {
-  const SizedWidget({Key key}) : super(key: key);
+  const SizedWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => SizedBox(
