@@ -1,10 +1,10 @@
 name: viewport
 description: A MediaQuery alternative for Flutter which provides and allows different configurations.
-version: 0.1.0-nullsafety.0
+version: 0.1.0-nullsafety.1
 homepage: https://github.com/nyarian/viewport
 
 environment:
-  sdk: ">=2.12.0-133.2.beta <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
   flutter:
