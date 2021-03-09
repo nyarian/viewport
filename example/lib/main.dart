@@ -15,7 +15,7 @@ const double kBrowserMaxWidth = 1024.0;
 const Color kBackgroundColor = Colors.black;
 
 class ViewPortApp extends StatelessWidget {
-  const ViewPortApp({Key key}) : super(key: key);
+  const ViewPortApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => BoundedArea(
@@ -37,17 +37,16 @@ class ViewPortApp extends StatelessWidget {
 }
 
 class BoundedArea extends StatelessWidget {
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final Widget child;
 
   const BoundedArea({
-    @required this.child,
+    required this.child,
     this.width,
     this.height,
-    Key key,
-  })  : assert(child != null, "Child widget reference can't be null"),
-        super(key: key);
+    Key? key,
+  })  : super(key: key);
 
   @override
   Widget build(BuildContext context) =>
@@ -66,17 +65,25 @@ class BoundedArea extends StatelessWidget {
           )
         ],
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DoubleProperty('width', width))
+      ..add(DoubleProperty('height', height));
+  }
 }
 
 class DynamicViewportWidget extends StatefulWidget {
-  const DynamicViewportWidget({Key key}) : super(key: key);
+  const DynamicViewportWidget({Key? key}) : super(key: key);
 
   @override
   _DynamicViewportWidgetState createState() => _DynamicViewportWidgetState();
 }
 
 class _DynamicViewportWidgetState extends State<DynamicViewportWidget> {
-  WidgetViewPortFactory _factory;
+  late WidgetViewPortFactory _factory;
 
   void _updateFactory(WidgetViewPortFactory factory) =>
       setState(() => _factory = factory);
@@ -109,8 +116,8 @@ class LoginFormPage extends StatelessWidget {
   final OnFactoryUpdatedCallback onFactoryChangedCallback;
 
   const LoginFormPage({
-    @required this.onFactoryChangedCallback,
-    Key key,
+    required this.onFactoryChangedCallback,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -342,5 +349,12 @@ class LoginFormPage extends StatelessWidget {
       ),
     );
     if (factory != null) onFactoryChangedCallback(factory);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(ObjectFlagProperty<OnFactoryUpdatedCallback>.has(
+        'onFactoryChangedCallback', onFactoryChangedCallback));
   }
 }

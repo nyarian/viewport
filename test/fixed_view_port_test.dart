@@ -16,28 +16,6 @@ void main() {
   );
 
   test(
-    'assert that null height is not permitted',
-    () {
-      expect(
-        () => FixedViewPort(height: null),
-        throwsA(const TypeMatcher<AssertionError>()),
-      );
-    },
-    timeout: const Timeout(Duration(seconds: 1)),
-  );
-
-  test(
-    'assert that null width is not permitted',
-    () {
-      expect(
-        () => FixedViewPort(width: null),
-        throwsA(const TypeMatcher<AssertionError>()),
-      );
-    },
-    timeout: const Timeout(Duration(seconds: 1)),
-  );
-
-  test(
     'assert that default-args-constructed instance gives infinite height '
     'and width values',
     () {

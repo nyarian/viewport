@@ -3,28 +3,6 @@ import 'package:viewport/viewport.dart';
 
 void main() {
   test(
-    'assert that null as a first viewport is forbidden',
-    () {
-      expect(
-        () => MaximalOfViewPort(null, const FixedViewPort()),
-        throwsAssertionError,
-      );
-    },
-    timeout: const Timeout(Duration(seconds: 1)),
-  );
-
-  test(
-    'assert that null as a second viewport is forbidden',
-    () {
-      expect(
-        () => MaximalOfViewPort(const FixedViewPort(), null),
-        throwsAssertionError,
-      );
-    },
-    timeout: const Timeout(Duration(seconds: 1)),
-  );
-
-  test(
     'assert that maximal of two height values was returned',
     () {
       const subject = MaximalOfViewPort(FixedViewPort(height: 50, width: 50),

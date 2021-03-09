@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:viewport/viewport.dart';
 
@@ -69,15 +70,10 @@ class ViewPortWidget extends InheritedWidget {
   ///   * [WidgetViewPortFactory] - provides an interface for dynamic [ViewPort]
   ///     configuration.
   const ViewPortWidget({
-    @required this.factory,
-    @required Widget child,
-    Key key,
-  })  : assert(
-            factory != null,
-            'Factory is necessary to define the actual '
-            'ViewPort that will be used'),
-        assert(child != null, 'Child reference must not be null'),
-        super(key: key, child: child);
+    required this.factory,
+    required Widget child,
+    Key? key,
+  }) : super(key: key, child: child);
 
   /// Provides a fixed [ViewPort] configuration.
   ///
@@ -86,10 +82,10 @@ class ViewPortWidget extends InheritedWidget {
   ///   * [FixedViewPortFactory] - provides [FixedViewPort]-backed
   ///     dynamic configuration
   ViewPortWidget.fixed({
-    @required Widget child,
+    required Widget child,
     double height = double.infinity,
     double width = double.infinity,
-    Key key,
+    Key? key,
   }) : this(
           factory: FixedViewPortFactory(
             height: height,
@@ -110,14 +106,13 @@ class ViewPortWidget extends InheritedWidget {
   ///   * [MediaQueryViewPortFactory] - provides [MediaQuerySizeViewPort]-backed
   ///     dynamic configuration
   const ViewPortWidget.mediaQuery({
-    @required Widget child,
-    Key key,
+    required Widget child,
+    Key? key,
   }) : this(
           factory: const MediaQueryViewPortFactory(),
           child: child,
           key: key,
         );
-
 
   /// Provides an upper-bounded [MediaQueryData]-based [ViewPort] configuration.
   ///
@@ -130,10 +125,10 @@ class ViewPortWidget extends InheritedWidget {
   ///   * [MediaQueryViewPortFactory] - provides [MediaQuerySizeViewPort]-backed
   ///     dynamic configuration
   ViewPortWidget.upperBoundedMediaQuery({
-    @required Widget child,
+    required Widget child,
     double maxHeight = double.infinity,
     double maxWidth = double.infinity,
-    Key key,
+    Key? key,
   }) : this(
           factory: UpperBoundedViewPortFactory(
             const MediaQueryViewPortFactory(),
@@ -152,10 +147,10 @@ class ViewPortWidget extends InheritedWidget {
   ///   * [MediaQueryViewPortFactory] - provides [MediaQuerySizeViewPort]-backed
   ///     dynamic configuration
   ViewPortWidget.lowerBoundedMediaQuery({
-    @required Widget child,
+    required Widget child,
     double minHeight = 0,
     double minWidth = 0,
-    Key key,
+    Key? key,
   }) : this(
           factory: LowerBoundedViewPortFactory(
             const MediaQueryViewPortFactory(),
@@ -174,12 +169,12 @@ class ViewPortWidget extends InheritedWidget {
   ///   * [MediaQueryViewPortFactory] - provides [MediaQuerySizeViewPort]-backed
   ///     dynamic configuration
   ViewPortWidget.coercedMediaQuery({
-    @required Widget child,
+    required Widget child,
     double maxHeight = double.infinity,
     double maxWidth = double.infinity,
     double minHeight = 0,
     double minWidth = 0,
-    Key key,
+    Key? key,
   }) : this(
           factory: CoercedViewPortFactory(
             const MediaQueryViewPortFactory(),
@@ -195,6 +190,12 @@ class ViewPortWidget extends InheritedWidget {
   @override
   bool updateShouldNotify(ViewPortWidget oldWidget) =>
       oldWidget.factory != factory;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('factory', factory));
+  }
 }
 
 /// Dynamically configures [ViewPort].
@@ -230,7 +231,7 @@ class FixedViewPortFactory implements WidgetViewPortFactory {
   final double width;
   final double height;
 
-  const FixedViewPortFactory({@required this.width, @required this.height});
+  const FixedViewPortFactory({required this.width, required this.height});
 
   @override
   ViewPort create(BuildContext context) =>
@@ -356,8 +357,7 @@ class UpperBoundedViewPortFactory implements WidgetViewPortFactory {
     this.delegateFactory, {
     this.maxHeight = double.infinity,
     this.maxWidth = double.infinity,
-  }) : assert(delegateFactory != null,
-            'Given decorated viewport factory points to null');
+  });
 
   @override
   ViewPort create(BuildContext context) => const ViewPorts().upperBounded(
@@ -400,8 +400,7 @@ class LowerBoundedViewPortFactory implements WidgetViewPortFactory {
     this.delegateFactory, {
     this.minHeight = 0,
     this.minWidth = 0,
-  }) : assert(delegateFactory != null,
-            'Given decorated viewport factory points to null');
+  });
 
   @override
   ViewPort create(BuildContext context) => const ViewPorts().lowerBounded(
@@ -448,9 +447,7 @@ class CoercedViewPortFactory implements WidgetViewPortFactory {
     this.maxWidth = double.infinity,
     this.minHeight = 0,
     this.minWidth = 0,
-  })  : assert(delegateFactory != null,
-            'Given decorated viewport factory points to null'),
-        assert(minHeight <= maxHeight,
+  })  : assert(minHeight <= maxHeight,
             'maxHeight < minHeight, which is forbidden'),
         assert(minWidth <= maxWidth, 'maxWidth < minWidth, which is forbidden');
 

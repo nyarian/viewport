@@ -1,4 +1,5 @@
-/// viewport library is designed to provide a way to use rendering size
+// ignore_for_file: comment_references
+/// `viewport` library is designed to provide a way to use rendering size
 /// percentage-based layouts with trivial viewport attributes policy change.
 ///
 /// The most common use case is when an existing Flutter project for that works

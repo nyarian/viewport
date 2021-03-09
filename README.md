@@ -1,8 +1,8 @@
 # viewport
 
 ## Description
-The library is designed to provide a way to use rendering size percentage-based layouts with trivial viewport
-attributes policy change.
+The library is designed to provide a way to use percentage-based layouts with easy viewport's policy (permitted size) 
+change.
 
 The most common use case is when an existing Flutter project for that works well for mobile devices should be mirrored
 as is as a web and / or desktop application. Consider:

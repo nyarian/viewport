@@ -54,12 +54,9 @@ abstract class ViewPort {
   double get aspectRatio;
 
   static ViewPort of(BuildContext context) {
-    assert(context != null, 'Provided BuildContext reference points to null');
-    final ViewPortWidget widget =
+    final ViewPortWidget? widget =
         context.dependOnInheritedWidgetOfExactType<ViewPortWidget>();
-    if (widget != null) {
-      return widget.factory.create(context);
-    } else {
+    if (widget == null) {
       throw FlutterError.fromParts(<DiagnosticsNode>[
         ErrorSummary(
             'ViewPortWidget.of() called with a context that does not contain a '
@@ -71,6 +68,8 @@ chain of the widget that requested invoked ViewPortWidget.of() does not have a
 ViewPortWidget instance as a part of it's tree.'''),
         context.describeElement('The context used was')
       ]);
+    } else {
+      return widget.factory.create(context);
     }
   }
 }
@@ -348,9 +347,7 @@ class FixedViewPort implements ViewPort {
   const FixedViewPort({
     this.height = double.infinity,
     this.width = double.infinity,
-  })  : assert(height != null, 'height must not be null'),
-        assert(width != null, 'width must not be null'),
-        assert(height >= 0, 'height must not be negative, but got $height'),
+  })  : assert(height >= 0, 'height must not be negative, but got $height'),
         assert(width >= 0, 'width must not be negative, but got $width');
 
   @override
@@ -389,8 +386,7 @@ class FixedViewPort implements ViewPort {
 class MediaQuerySizeViewPort implements ViewPort {
   final MediaQueryData _data;
 
-  const MediaQuerySizeViewPort(this._data)
-      : assert(_data != null, 'Provided MediaQueryData points to null');
+  const MediaQuerySizeViewPort(this._data);
 
   @override
   double get aspectRatio => _WidthToHeightAspectRatio.of(this).doubleValue;
@@ -435,10 +431,7 @@ class MinimalOfViewPort implements ViewPort {
   final ViewPort _leftPort;
   final ViewPort _rightPort;
 
-  const MinimalOfViewPort(this._leftPort, this._rightPort)
-      : assert(_leftPort != null, 'First (left) viewport given points to null'),
-        assert(
-            _rightPort != null, 'Second (right) viewport given points to null');
+  const MinimalOfViewPort(this._leftPort, this._rightPort);
 
   @override
   double get height => min(_leftPort.height, _rightPort.height);
@@ -485,10 +478,7 @@ class MaximalOfViewPort implements ViewPort {
   final ViewPort _leftPort;
   final ViewPort _rightPort;
 
-  const MaximalOfViewPort(this._leftPort, this._rightPort)
-      : assert(_leftPort != null, 'First (left) viewport given points to null'),
-        assert(
-            _rightPort != null, 'Second (right) viewport given points to null');
+  const MaximalOfViewPort(this._leftPort, this._rightPort);
 
   @override
   double get height => max(_leftPort.height, _rightPort.height);
